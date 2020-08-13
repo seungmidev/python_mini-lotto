@@ -1,2 +1,2 @@
-# -python-webservice
-sparta coding club project
+# python-webservice
+sparta coding club project 'Mini Lotto'
