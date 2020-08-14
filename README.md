@@ -1,2 +1,2 @@
-# python-mini_lotto
+# python_mini-lotto
 python webservice
