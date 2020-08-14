@@ -1,2 +1,2 @@
 # python_mini-lotto
-python webservice
+python webservice project

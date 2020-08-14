@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Mini Lotto</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <script>
+            function showResult() {
+                $('.result-tit').empty();
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/result',
+                    data: {},
+                    success: function (response) {
+                        if (response["result"] == "success") {
+                            let win = response['win_result'];
+
+                            for(let i = 0; i < win.length; i++) {
+                                let order = win[i];
+                                let tempHtml = `${order['title']} <span>${order['date']}</span>`;
+                                $('.result-tit').append(tempHtml);
+                            }
+
+
+                        }
+                    }
+                });
+            }
+
+            $(document).ready(function() {
+                showResult();
+            });
+        </script>
+    </head>
+    <body>
+        <div id="wrap">
+            <h1 class="blind">로또 당첨 조회 및 내역 확인 페이지</h1>
+
+            <header id="header">
+                <h2 class="result-tit">
+                    923회 <span>(2020년 08월 08일 추첨)</span>
+                </h2>
+            </header>
+
+            <div id="container">
+                <section class="sec">
+                    <h3 class=""></h3>
+                </section>
+            </div>
+
+            <footer id="footer">
+
+            </footer>
+        </div>
+    </body>
+</html>
