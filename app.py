@@ -24,7 +24,7 @@ result_list = {
     'date': result_date
 }
 
-db.win_result.insert_one(result_list)
+# db.win_result.insert_one(result_list)
 
 
 @app.route('/')
