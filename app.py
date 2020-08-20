@@ -5,26 +5,13 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 
-client = MongoClient('localhost', 27017)
-db = client.dblotto
-
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-data = requests.get('https://dhlottery.co.kr/gameResult.do?method=byWin', headers=headers)
-soup = BeautifulSoup(data.text, 'html.parser')
-
-result_tag = soup.select_one('.win_result')
-
-result_tit = result_tag.select_one('h4 strong').text
-result_date = result_tag.select_one('.desc').text
-
-
-result_list = {
-    'title': result_tit,
-    'date': result_date
+proxies = {
+  "http": None,
+  "https": None,
 }
 
-# db.win_result.insert_one(result_list)
+client = MongoClient('localhost', 27017)
+db = client.dblotto
 
 
 @app.route('/')
@@ -32,10 +19,22 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/result', methods=['GET'])
+@app.route('/win-num', methods=['GET'])
+def get_num():
+    result = list(db.win_num.find({}, {'_id': False}).sort('drwNo', -1))
+    return jsonify({'result': 'success', 'win_num': result})
+
+
+@app.route('/win-result', methods=['GET'])
 def get_result():
-    result = list(db.win_result.find({}, {'_id': 0}))
+    result = list(db.win_result.find({}, {'_id': False}))
     return jsonify({'result': 'success', 'win_result': result})
+
+
+@app.route('/store', methods=['GET'])
+def get_store():
+    result = list(db.store.find({}, {'_id': False}))
+    return jsonify({'result': 'success', 'store': result})
 
 
 if __name__ == '__main__':

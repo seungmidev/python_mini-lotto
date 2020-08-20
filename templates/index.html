@@ -9,31 +9,98 @@
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
-            function showResult() {
-                $('.result-tit').empty();
+            function showNum() {
+                $('.win-tit, .win-num').empty();
 
                 $.ajax({
                     type: 'GET',
-                    url: '/result',
+                    url: '/win-num',
                     data: {},
                     success: function (response) {
                         if (response["result"] == "success") {
-                            let win = response['win_result'];
+                            let win_num = response['win_num'];
 
-                            for(let i = 0; i < win.length; i++) {
-                                let order = win[i];
-                                let tempHtml = `${order['title']} <span>${order['date']}</span>`;
-                                $('.result-tit').append(tempHtml);
+                            for(let i = 0; i < win_num.length; i++) {
+                                let num = win_num[i];
+
+                                let tempHtml = `${num['drwNo']}회 <span>(${num['drwNoDate']})</span>`;
+                                $('.win-tit').append(tempHtml);
+
+                                let numHtml = `<span class="win-num-item">${num['drwtNo1']}</span>
+                                               <span class="win-num-item">${num['drwtNo2']}</span>
+                                               <span class="win-num-item">${num['drwtNo3']}</span>
+                                               <span class="win-num-item">${num['drwtNo4']}</span>
+                                               <span class="win-num-item">${num['drwtNo5']}</span>
+                                               <span class="win-num-item">${num['drwtNo6']}</span>
+                                               <span class="win-num-item plus">+</span>
+                                               <span class="win-num-item">${num['bnusNo']}</span>`
+
+                                $('.win-num').append(numHtml);
                             }
+                        }
+                    }
+                });
+            }
 
+            function showResult() {
+                $('.table-result tbody').empty();
 
+                $.ajax({
+                    type: 'GET',
+                    url: '/win-result',
+                    data: {},
+                    success: function (response) {
+                        if (response["result"] == "success") {
+                            let win_result = response['win_result'];
+
+                            for(let i = 0; i < win_result.length; i++) {
+                                let win = win_result[i];
+
+                                let winHtml = `<tr>
+                                                   <td>${win['rank']}</td>
+                                                   <td>${win['game']}</td>
+                                                   <td>${win['amount']}</td>
+                                                   <td>${win['amount_one']}</td>
+                                               </tr>`
+
+                                $('.table-result tbody').append(winHtml);
+                            }
+                        }
+                    }
+                });
+            }
+
+            function showStore() {
+                $('.table-store tbody').empty();
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/store',
+                    data: {},
+                    success: function (response) {
+                        if (response["result"] == "success") {
+                            let stores = response['store'];
+
+                            for(let i = 0; i < stores.length; i++) {
+                                let store = stores[i];
+
+                                let winHtml = `<tr>
+                                                   <td>${store['num']}</td>
+                                                   <td>${store['name']}</td>
+                                                   <td>${store['count']}</td>
+                                               </tr>`
+
+                                $('.table-store tbody').append(winHtml);
+                            }
                         }
                     }
                 });
             }
 
             $(document).ready(function() {
-                //showResult();
+                showNum();
+                showResult();
+                showStore();
             });
         </script>
     </head>
@@ -161,15 +228,15 @@
                                     </td>
                                     <td>
                                         <div class="match-num">
-                                            <span>1</span>
-                                            <span>2</span>
+                                            <span class="equal">1</span>
+                                            <span class="equal">2</span>
                                             <span class="equal">3</span>
-                                            <span>4</span>
-                                            <span>5</span>
+                                            <span class="equal">4</span>
+                                            <span class="equal">5</span>
                                             <span class="equal">6</span>
                                         </div>
                                     </td>
-                                    <td>낙첨</td>
+                                    <td>당첨</td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -205,10 +272,66 @@
 
                 <section class="sec sec-result">
                     <h3 class="result-tit">회차별 당첨결과</h3>
+                    <div class="table-wrap table-result">
+                        <table>
+                            <colgroup>
+                                <col width="25%">
+                                <col width="25%">
+                                <col width="25%">
+                                <col width="25%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th scope="col">순위</th>
+                                    <th scope="col">당첨수</th>
+                                    <th scope="col">총 당첨금액</th>
+                                    <th scope="col">1게임당 당첨금</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1등</td>
+                                    <td>8</td>
+                                    <td>21,340,437,000원</td>
+                                    <td>2,667,554,625원</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </section>
 
                 <section class="sec sec-store">
                     <h3 class="store-tit">최다 당첨판매점</h3>
+                    <div class="store-wrap">
+                        <div class="store-map">
+                            MAP
+                        </div>
+                        <div class="store-list">
+                            <div class="table-wrap table-store">
+                                <table>
+                                    <colgroup>
+                                        <col width="22%">
+                                        <col width="50%">
+                                        <col width="28%">
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">번호</th>
+                                            <th scope="col">상호명</th>
+                                            <th scope="col">당첨횟수</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>씨유역삼에클라트로또판매점</td>
+                                            <td>35</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </div>
 
