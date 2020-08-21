@@ -2,18 +2,13 @@ import requests
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
 
-proxies = {
-  'http': None,
-  'https': Nonek
-}
-
 client = MongoClient('localhost', 27017)
 db = client.dblotto
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
 
 
 def get_lotto():
-    data = requests.get('https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=924', headers=headers, proxies=proxies)
+    data = requests.get('https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=924', headers=headers)
     lotto_no = data.json()
 
     lotto_list = {
@@ -32,7 +27,7 @@ def get_lotto():
 
 
 def get_result():
-    data = requests.get('https://dhlottery.co.kr/gameResult.do?method=byWin', headers=headers, proxies=proxies)
+    data = requests.get('https://dhlottery.co.kr/gameResult.do?method=byWin', headers=headers)
 
     soup = BeautifulSoup(data.text, 'html.parser')
 
@@ -55,7 +50,7 @@ def get_result():
 
 
 def get_store():
-    data = requests.get('https://dhlottery.co.kr/store.do?method=topStoreRank&rank=2&pageGubun=L645', headers=headers, proxies=proxies)
+    data = requests.get('https://dhlottery.co.kr/store.do?method=topStoreRank&rank=2&pageGubun=L645', headers=headers)
 
     soup = BeautifulSoup(data.text, 'html.parser')
 
