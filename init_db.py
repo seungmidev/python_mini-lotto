@@ -4,7 +4,7 @@ from pymongo import MongoClient
 
 proxies = {
   'http': None,
-  'https': None
+  'https': Nonek
 }
 
 client = MongoClient('localhost', 27017)
