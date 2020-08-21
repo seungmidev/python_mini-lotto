@@ -5,11 +5,6 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 
-proxies = {
-  "http": None,
-  "https": None,
-}
-
 client = MongoClient('localhost', 27017)
 db = client.dblotto
 
