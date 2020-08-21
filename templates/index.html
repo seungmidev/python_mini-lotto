@@ -8,6 +8,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=rzd6uykue3"></script>
         <script>
             function showNum() {
                 $('.win-tit, .win-num').empty();
@@ -20,23 +21,19 @@
                         if (response["result"] == "success") {
                             let win_num = response['win_num'];
 
-                            for(let i = 0; i < win_num.length; i++) {
-                                let num = win_num[i];
+                            let tempHtml = `${win_num['drwNo']}회 <span>(${win_num['drwNoDate']})</span>`;
+                            $('.win-tit').append(tempHtml);
 
-                                let tempHtml = `${num['drwNo']}회 <span>(${num['drwNoDate']})</span>`;
-                                $('.win-tit').append(tempHtml);
+                            let numHtml = `<span class="win-num-item">${win_num['drwtNo1']}</span>
+                                           <span class="win-num-item">${win_num['drwtNo2']}</span>
+                                           <span class="win-num-item">${win_num['drwtNo3']}</span>
+                                           <span class="win-num-item">${win_num['drwtNo4']}</span>
+                                           <span class="win-num-item">${win_num['drwtNo5']}</span>
+                                           <span class="win-num-item">${win_num['drwtNo6']}</span>
+                                           <span class="win-num-item plus">+</span>
+                                           <span class="win-num-item">${win_num['bnusNo']}</span>`
 
-                                let numHtml = `<span class="win-num-item">${num['drwtNo1']}</span>
-                                               <span class="win-num-item">${num['drwtNo2']}</span>
-                                               <span class="win-num-item">${num['drwtNo3']}</span>
-                                               <span class="win-num-item">${num['drwtNo4']}</span>
-                                               <span class="win-num-item">${num['drwtNo5']}</span>
-                                               <span class="win-num-item">${num['drwtNo6']}</span>
-                                               <span class="win-num-item plus">+</span>
-                                               <span class="win-num-item">${num['bnusNo']}</span>`
-
-                                $('.win-num').append(numHtml);
-                            }
+                            $('.win-num').append(numHtml);
                         }
                     }
                 });
@@ -97,10 +94,20 @@
                 });
             }
 
+            function storeMap() {
+                let mapOptions = {
+                    center: new naver.maps.LatLng(37.3595704, 127.105399),
+                    zoom: 10
+                };
+
+                let map = new naver.maps.Map('map', mapOptions);
+            }
+
             $(document).ready(function() {
                 showNum();
                 showResult();
                 showStore();
+                storeMap();
             });
         </script>
     </head>
@@ -303,7 +310,7 @@
                 <section class="sec sec-store">
                     <h3 class="store-tit">최다 당첨판매점</h3>
                     <div class="store-wrap">
-                        <div class="store-map">
+                        <div id="map" class="store-map">
                             MAP
                         </div>
                         <div class="store-list">
