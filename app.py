@@ -16,7 +16,7 @@ def home():
 
 @app.route('/win-num', methods=['GET'])
 def get_num():
-    result = list(db.win_num.find({}, {'_id': False}).limit(1).sort('drwNo', -1))
+    result = list(db.win_num.find({}, {'_id': False}).sort('drwNo', -1).limit(1))
     return jsonify({'result': 'success', 'win_num': result})
 
 
