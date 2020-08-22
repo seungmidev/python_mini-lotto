@@ -8,22 +8,30 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/5
 
 
 def get_lotto():
-    data = requests.get('https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=924', headers=headers)
-    lotto_no = data.json()
+    base_url = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo='
+    count = 1
 
-    lotto_list = {
-        'drwNo': lotto_no['drwNo'],
-        'drwNoDate': lotto_no['drwNoDate'],
-        'drwtNo1': lotto_no['drwtNo1'],
-        'drwtNo2': lotto_no['drwtNo2'],
-        'drwtNo3': lotto_no['drwtNo3'],
-        'drwtNo4': lotto_no['drwtNo4'],
-        'drwtNo5': lotto_no['drwtNo5'],
-        'drwtNo6': lotto_no['drwtNo6'],
-        'bnusNo': lotto_no['bnusNo']
-    }
+    while True:
+        data = requests.get(base_url + str(count), headers=headers)
+        result = data.json()
 
-    db.win_num.insert_one(lotto_list)
+        if result['returnValue'] == 'fail':
+            break
+        else:
+            lotto_list = {
+                'drwNo': result['drwNo'],
+                'drwNoDate': result['drwNoDate'],
+                'drwtNo1': result['drwtNo1'],
+                'drwtNo2': result['drwtNo2'],
+                'drwtNo3': result['drwtNo3'],
+                'drwtNo4': result['drwtNo4'],
+                'drwtNo5': result['drwtNo5'],
+                'drwtNo6': result['drwtNo6'],
+                'bnusNo': result['bnusNo']
+            }
+
+            db.win_num.insert_one(lotto_list)
+            count = count + 1
 
 
 def get_result():
