@@ -10,9 +10,16 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=rzd6uykue3"></script>
         <script>
-            function showNum() {
-                $('.win-tit, .win-num').empty();
+            function empty() {
+                $('.win-tit').empty();
+                $('.win-num').empty();
+                $('.match-num').empty();
+                $('.win-result').empty();
+                $('.table-result tbody').empty();
+                $('.table-store tbody').empty();
+            }
 
+            function showNum() {
                 $.ajax({
                     type: 'GET',
                     url: '/win-num',
@@ -39,22 +46,56 @@
                 });
             }
 
-            function matchNum() {
-                let num = $('.my-num').val();
-
+            function testForRequest() {
+                let firstRow01 = $("#first-row-1").val();
+                let firstRow02 = $("#first-row-2").val();
+                let firstRow03 = $("#first-row-3").val();
+                let firstRow04 = $("#first-row-4").val();
+                let firstRow05 = $("#first-row-5").val();
+                let firstRow06 = $("#first-row-6").val();
+                let url = '/my-num?firstRow01=' + firstRow01
+                    + '&firstRow02=' + firstRow02
+                    + '&firstRow03=' + firstRow03
+                    + '&firstRow04=' + firstRow04
+                    + '&firstRow05=' + firstRow05
+                    + '&firstRow06=' + firstRow06;
                 $.ajax({
                     type: 'GET',
-                    url: '/my-num',
-                    data: {num_give: num},
+                    url: url,
+                    data: {},
                     success: function (response) {
+                        let num = response['my_num'];
+                        console.log(num)
 
+                        let my_num = [
+                            firstRow01,
+                            firstRow02,
+                            firstRow03,
+                            firstRow04,
+                            firstRow05,
+                            firstRow06
+                        ];
+
+                        let testHtml = ``;
+                        for(let i = 0; i < num.length; i++) {
+                            if(num[i] == -1) {
+                                testHtml += `<span>${my_num[i]}</span>`
+                            }else {
+                                testHtml += `<span class="equal">${my_num[i]}</span>`
+                            }
+                        }
+                        $('.match-num').append(testHtml);
+
+                        if (num.indexOf(-1) > -1) {
+                            $('.win-result').text('낙첨');
+                        } else {
+                            $('.win-result').text('당첨');
+                        }
                     }
                 });
             }
 
             function showResult() {
-                $('.table-result tbody').empty();
-
                 $.ajax({
                     type: 'GET',
                     url: '/win-result',
@@ -81,8 +122,6 @@
             }
 
             function showStore() {
-                $('.table-store tbody').empty();
-
                 $.ajax({
                     type: 'GET',
                     url: '/store',
@@ -117,8 +156,8 @@
             }
 
             $(document).ready(function() {
+                empty();
                 showNum();
-                matchNum();
                 showResult();
                 showStore();
                 storeMap();
@@ -170,12 +209,12 @@
                                 <tr>
                                     <td>
                                         <div class="input-form">
-                                            <input type="text" maxlength="2" class="my-num">
-                                            <input type="text" maxlength="2" class="my-num">
-                                            <input type="text" maxlength="2" class="my-num">
-                                            <input type="text" maxlength="2" class="my-num">
-                                            <input type="text" maxlength="2" class="my-num">
-                                            <input type="text" maxlength="2" class="my-num">
+                                            <input type="text" maxlength="2" id="first-row-1">
+                                            <input type="text" maxlength="2" id="first-row-2">
+                                            <input type="text" maxlength="2" id="first-row-3">
+                                            <input type="text" maxlength="2" id="first-row-4">
+                                            <input type="text" maxlength="2" id="first-row-5">
+                                            <input type="text" maxlength="2" id="first-row-6">
                                         </div>
                                     </td>
                                     <td>
@@ -188,7 +227,7 @@
                                             <span class="equal">6</span>
                                         </div>
                                     </td>
-                                    <td>낙첨</td>
+                                    <td class="win-result">낙첨</td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -211,7 +250,7 @@
                                             <span class="equal">6</span>
                                         </div>
                                     </td>
-                                    <td>낙첨</td>
+                                    <td class="win-result">낙첨</td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -234,7 +273,7 @@
                                             <span class="equal">6</span>
                                         </div>
                                     </td>
-                                    <td>낙첨</td>
+                                    <td class="win-result">낙첨</td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -257,7 +296,7 @@
                                             <span class="equal">6</span>
                                         </div>
                                     </td>
-                                    <td>당첨</td>
+                                    <td class="win-result">당첨</td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -280,14 +319,14 @@
                                             <span class="equal">6</span>
                                         </div>
                                     </td>
-                                    <td>낙첨</td>
+                                    <td class="win-result">낙첨</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="btn-wrap">
-                        <button type="button" class="btn-type btn-reset">초기화</button>
-                        <button type="button" class="btn-type btn-confirm">확인</button>
+                        <button type="button" class="btn-type btn-reset" onclick="empty()">초기화</button>
+                        <button type="button" class="btn-type btn-confirm" onclick="testForRequest()">확인</button>
                     </div>
                 </section>
 
