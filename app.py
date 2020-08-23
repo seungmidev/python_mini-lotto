@@ -31,6 +31,11 @@ def get_store():
     result = list(db.store.find({}, {'_id': False}))
     return jsonify({'result': 'success', 'store': result})
 
+@app.route('/my-num', methods=['GET'])
+def get_my_num():
+    return jsonify({'result': 'success', 'my_result': result})
+
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=8000, debug=True)

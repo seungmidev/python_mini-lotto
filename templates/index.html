@@ -19,7 +19,7 @@
                     data: {},
                     success: function (response) {
                         if (response["result"] == "success") {
-                            let win_num = response['win_num'];
+                            let win_num = response['win_num'][0];
 
                             let tempHtml = `${win_num['drwNo']}회 <span>(${win_num['drwNoDate']})</span>`;
                             $('.win-tit').append(tempHtml);
@@ -35,6 +35,19 @@
 
                             $('.win-num').append(numHtml);
                         }
+                    }
+                });
+            }
+
+            function matchNum() {
+                let num = $('.my-num').val();
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/my-num',
+                    data: {num_give: num},
+                    success: function (response) {
+
                     }
                 });
             }
@@ -105,6 +118,7 @@
 
             $(document).ready(function() {
                 showNum();
+                matchNum();
                 showResult();
                 showStore();
                 storeMap();
@@ -132,7 +146,7 @@
                         <span class="win-num-item">5</span>
                         <span class="win-num-item">6</span>
                         <span class="win-num-item plus">+</span>
-                        <span class="win-num-item">7</span>
+                        <span class="win-num-item num-bnus">7</span>
                     </div>
                 </section>
 
@@ -156,12 +170,12 @@
                                 <tr>
                                     <td>
                                         <div class="input-form">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
+                                            <input type="text" maxlength="2" class="my-num">
+                                            <input type="text" maxlength="2" class="my-num">
+                                            <input type="text" maxlength="2" class="my-num">
+                                            <input type="text" maxlength="2" class="my-num">
+                                            <input type="text" maxlength="2" class="my-num">
+                                            <input type="text" maxlength="2" class="my-num">
                                         </div>
                                     </td>
                                     <td>
