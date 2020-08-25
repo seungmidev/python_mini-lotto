@@ -9,160 +9,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=rzd6uykue3"></script>
-        <script>
-            function empty() {
-                $('.win-tit').empty();
-                $('.win-num').empty();
-                $('.match-num').empty();
-                $('.win-result').empty();
-                $('.table-result tbody').empty();
-                $('.table-store tbody').empty();
-            }
-
-            function showNum() {
-                $.ajax({
-                    type: 'GET',
-                    url: '/win-num',
-                    data: {},
-                    success: function (response) {
-                        if (response["result"] == "success") {
-                            let win_num = response['win_num'][0];
-
-                            let tempHtml = `${win_num['drwNo']}회 <span>(${win_num['drwNoDate']})</span>`;
-                            $('.win-tit').append(tempHtml);
-
-                            let numHtml = `<span class="win-num-item">${win_num['drwtNo1']}</span>
-                                           <span class="win-num-item">${win_num['drwtNo2']}</span>
-                                           <span class="win-num-item">${win_num['drwtNo3']}</span>
-                                           <span class="win-num-item">${win_num['drwtNo4']}</span>
-                                           <span class="win-num-item">${win_num['drwtNo5']}</span>
-                                           <span class="win-num-item">${win_num['drwtNo6']}</span>
-                                           <span class="win-num-item plus">+</span>
-                                           <span class="win-num-item">${win_num['bnusNo']}</span>`
-
-                            $('.win-num').append(numHtml);
-                        }
-                    }
-                });
-            }
-
-            function testForRequest() {
-                let firstRow01 = $("#first-row-1").val();
-                let firstRow02 = $("#first-row-2").val();
-                let firstRow03 = $("#first-row-3").val();
-                let firstRow04 = $("#first-row-4").val();
-                let firstRow05 = $("#first-row-5").val();
-                let firstRow06 = $("#first-row-6").val();
-                let url = '/my-num?firstRow01=' + firstRow01
-                    + '&firstRow02=' + firstRow02
-                    + '&firstRow03=' + firstRow03
-                    + '&firstRow04=' + firstRow04
-                    + '&firstRow05=' + firstRow05
-                    + '&firstRow06=' + firstRow06;
-                $.ajax({
-                    type: 'GET',
-                    url: url,
-                    data: {},
-                    success: function (response) {
-                        let num = response['my_num'];
-                        console.log(num)
-
-                        let my_num = [
-                            firstRow01,
-                            firstRow02,
-                            firstRow03,
-                            firstRow04,
-                            firstRow05,
-                            firstRow06
-                        ];
-
-                        let testHtml = ``;
-                        for(let i = 0; i < num.length; i++) {
-                            if(num[i] == -1) {
-                                testHtml += `<span>${my_num[i]}</span>`
-                            }else {
-                                testHtml += `<span class="equal">${my_num[i]}</span>`
-                            }
-                        }
-                        $('.match-num').append(testHtml);
-
-                        if (num.indexOf(-1) > -1) {
-                            $('.win-result').text('낙첨');
-                        } else {
-                            $('.win-result').text('당첨');
-                        }
-                    }
-                });
-            }
-
-            function showResult() {
-                $.ajax({
-                    type: 'GET',
-                    url: '/win-result',
-                    data: {},
-                    success: function (response) {
-                        if (response["result"] == "success") {
-                            let win_result = response['win_result'];
-
-                            for(let i = 0; i < win_result.length; i++) {
-                                let win = win_result[i];
-
-                                let winHtml = `<tr>
-                                                   <td>${win['rank']}</td>
-                                                   <td>${win['game']}</td>
-                                                   <td>${win['amount']}</td>
-                                                   <td>${win['amount_one']}</td>
-                                               </tr>`
-
-                                $('.table-result tbody').append(winHtml);
-                            }
-                        }
-                    }
-                });
-            }
-
-            function showStore() {
-                $.ajax({
-                    type: 'GET',
-                    url: '/store',
-                    data: {},
-                    success: function (response) {
-                        if (response["result"] == "success") {
-                            let stores = response['store'];
-
-                            for(let i = 0; i < stores.length; i++) {
-                                let store = stores[i];
-
-                                let winHtml = `<tr>
-                                                   <td>${store['num']}</td>
-                                                   <td>${store['name']}</td>
-                                                   <td>${store['count']}</td>
-                                               </tr>`
-
-                                $('.table-store tbody').append(winHtml);
-                            }
-                        }
-                    }
-                });
-            }
-
-            function storeMap() {
-                let mapOptions = {
-                    center: new naver.maps.LatLng(37.3595704, 127.105399),
-                    zoom: 10
-                };
-
-                let map = new naver.maps.Map('map', mapOptions);
-            }
-
-            $(document).ready(function() {
-                empty();
-                showNum();
-                showResult();
-                showStore();
-                storeMap();
-            });
-        </script>
+        <script src="../static/main.js"></script>
     </head>
     <body>
         <div id="wrap">
@@ -191,7 +38,7 @@
 
                 <section class="sec sec-my">
                     <h3 class="my-tit">내 당첨확인</h3>
-                    <div class="table-wrap">
+                    <div class="table-wrap table-num">
                         <table>
                             <colgroup>
                                 <col width="33.3%">
@@ -209,12 +56,12 @@
                                 <tr>
                                     <td>
                                         <div class="input-form">
-                                            <input type="text" maxlength="2" id="first-row-1">
-                                            <input type="text" maxlength="2" id="first-row-2">
-                                            <input type="text" maxlength="2" id="first-row-3">
-                                            <input type="text" maxlength="2" id="first-row-4">
-                                            <input type="text" maxlength="2" id="first-row-5">
-                                            <input type="text" maxlength="2" id="first-row-6">
+                                            <input type="text" maxlength="2" id="myNo1-0">
+                                            <input type="text" maxlength="2" id="myNo1-1">
+                                            <input type="text" maxlength="2" id="myNo1-2">
+                                            <input type="text" maxlength="2" id="myNo1-3">
+                                            <input type="text" maxlength="2" id="myNo1-4">
+                                            <input type="text" maxlength="2" id="myNo1-5">
                                         </div>
                                     </td>
                                     <td>
@@ -232,12 +79,12 @@
                                 <tr>
                                     <td>
                                         <div class="input-form">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
+                                            <input type="text" maxlength="2" id="myNo2-0">
+                                            <input type="text" maxlength="2" id="myNo2-1">
+                                            <input type="text" maxlength="2" id="myNo2-2">
+                                            <input type="text" maxlength="2" id="myNo2-3">
+                                            <input type="text" maxlength="2" id="myNo2-4">
+                                            <input type="text" maxlength="2" id="myNo2-5">
                                         </div>
                                     </td>
                                     <td>
@@ -255,12 +102,12 @@
                                 <tr>
                                     <td>
                                         <div class="input-form">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
+                                            <input type="text" maxlength="2" id="myNo3-0">
+                                            <input type="text" maxlength="2" id="myNo3-1">
+                                            <input type="text" maxlength="2" id="myNo3-2">
+                                            <input type="text" maxlength="2" id="myNo3-3">
+                                            <input type="text" maxlength="2" id="myNo3-4">
+                                            <input type="text" maxlength="2" id="myNo3-5">
                                         </div>
                                     </td>
                                     <td>
@@ -278,12 +125,12 @@
                                 <tr>
                                     <td>
                                         <div class="input-form">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
+                                            <input type="text" maxlength="2" id="myNo4-0">
+                                            <input type="text" maxlength="2" id="myNo4-1">
+                                            <input type="text" maxlength="2" id="myNo4-2">
+                                            <input type="text" maxlength="2" id="myNo4-3">
+                                            <input type="text" maxlength="2" id="myNo4-4">
+                                            <input type="text" maxlength="2" id="myNo4-5">
                                         </div>
                                     </td>
                                     <td>
@@ -301,12 +148,12 @@
                                 <tr>
                                     <td>
                                         <div class="input-form">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
-                                            <input type="text" maxlength="2">
+                                            <input type="text" maxlength="2" id="myNo5-0">
+                                            <input type="text" maxlength="2" id="myNo5-1">
+                                            <input type="text" maxlength="2" id="myNo5-2">
+                                            <input type="text" maxlength="2" id="myNo5-3">
+                                            <input type="text" maxlength="2" id="myNo5-4">
+                                            <input type="text" maxlength="2" id="myNo5-5">
                                         </div>
                                     </td>
                                     <td>
