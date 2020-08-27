@@ -1,5 +1,10 @@
 from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
+from apscheduler.jobstores.base import JobLookupError
+from apscheduler.schedulers.background import BlockingScheduler
+import schedule
+import time
+from init_db import get_lotto, get_lotto_result, get_lotto_store
 
 app = Flask(__name__)
 
@@ -58,6 +63,9 @@ def get_my_num():
 
     print(correct_list)
     return jsonify({'result': 'success', 'my_num': correct_list})
+
+
+schedule.every().saturday.at("21:00").do(get_lotto_result, get_lotto_store, get_lotto)
 
 
 if __name__ == '__main__':

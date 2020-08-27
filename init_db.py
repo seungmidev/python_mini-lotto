@@ -8,38 +8,35 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/5
 
 
 def get_lotto():
-    base_url = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo='
-    count = 1
+    last_data = db.win_num.find({}, {'_id': False}).sort('drwNo', -1).limit(1)
+    last_drwno = last_data[0]['drwNo'] + 1
 
-    while True:
-        data = requests.get(base_url + str(count), headers=headers)
-        result = data.json()
+    base_url = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=' + str(last_drwno)
 
-        if result['returnValue'] == 'fail':
-            break
-        else:
-            lotto_list = {
-                'drwNo': result['drwNo'],
-                'drwNoDate': result['drwNoDate'],
-                'drwtNo1': result['drwtNo1'],
-                'drwtNo2': result['drwtNo2'],
-                'drwtNo3': result['drwtNo3'],
-                'drwtNo4': result['drwtNo4'],
-                'drwtNo5': result['drwtNo5'],
-                'drwtNo6': result['drwtNo6'],
-                'bnusNo': result['bnusNo']
-            }
+    data = requests.get(base_url, headers=headers)
+    result = data.json()
 
-            db.win_num.insert_one(lotto_list)
-            count = count + 1
+    lotto_list = {
+        'drwNo': result['drwNo'],
+        'drwNoDate': result['drwNoDate'],
+        'drwtNo1': result['drwtNo1'],
+        'drwtNo2': result['drwtNo2'],
+        'drwtNo3': result['drwtNo3'],
+        'drwtNo4': result['drwtNo4'],
+        'drwtNo5': result['drwtNo5'],
+        'drwtNo6': result['drwtNo6']
+    }
+
+    db.win_num.insert_one(lotto_list)
 
 
-def get_result():
+def get_lotto_result():
     data = requests.get('https://dhlottery.co.kr/gameResult.do?method=byWin', headers=headers)
 
     soup = BeautifulSoup(data.text, 'html.parser')
-
     wins = soup.select('.tbl_data tbody tr')
+
+    db.win_result.delete_many({})
 
     for win in wins:
         rank = win.select_one('td:nth-child(1)').text
@@ -57,12 +54,13 @@ def get_result():
         db.win_result.insert_one(win_list)
 
 
-def get_store():
+def get_lotto_store():
     data = requests.get('https://dhlottery.co.kr/store.do?method=topStoreRank&rank=2&pageGubun=L645', headers=headers)
 
     soup = BeautifulSoup(data.text, 'html.parser')
-
     stores = soup.select('.tbl_data tbody tr')
+
+    db.store.delete_many({})
 
     for store in stores:
         num = store.select_one('td:nth-child(1)').text
@@ -79,5 +77,5 @@ def get_store():
 
 
 get_lotto()
-get_result()
-get_store()
+get_lotto_result()
+get_lotto_store()
