@@ -32,14 +32,9 @@ def get_store():
 
 @app.route('/my-num', methods=['GET'])
 def get_my_num():
-    number_list = [
-        request.args.get('firstRow01'),
-        request.args.get('firstRow02'),
-        request.args.get('firstRow03'),
-        request.args.get('firstRow04'),
-        request.args.get('firstRow05'),
-        request.args.get('firstRow06')
-    ]
+    test = request.args.get('requestParam')
+    number_list = list(map(int, test.split(',')))
+    print(number_list)
 
     result = list(db.win_num.find({}, {'_id': False}).sort('drwNo', -1).limit(1))
 
@@ -61,6 +56,7 @@ def get_my_num():
         else:
             correct_list.append(-1)
 
+    print(correct_list)
     return jsonify({'result': 'success', 'my_num': correct_list})
 
 

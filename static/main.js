@@ -34,78 +34,87 @@ function showNum() {
     });
 }
 
-function testForRequest() {
-    $('.table-num').find('tr').each(function(idx) {
-        let _this = $(this);
-        let numbox = $(this).find('input[type="text"]');
+function testForRequest(obj, myNo) {
+    let lottoNo = myNo.join(',')
+    console.log(myNo.join(','))
 
+    $.ajax({
+        type: 'GET',
+        url: '/my-num',
+        data: {requestParam: lottoNo},
+        success: function (response) {
+            let winNo = response['my_num'];
+            console.log(winNo)
 
-        let firstRow01 = $("#myNo1-0").val();
-        let firstRow02 = $("#myNo1-1").val();
-        let firstRow03 = $("#myNo1-2").val();
-        let firstRow04 = $("#myNo1-3").val();
-        let firstRow05 = $("#myNo1-4").val();
-        let firstRow06 = $("#myNo1-5").val();
-
-        let url = '/my-num?firstRow01=' + firstRow01
-            + '&firstRow02=' + firstRow02
-            + '&firstRow03=' + firstRow03
-            + '&firstRow04=' + firstRow04
-            + '&firstRow05=' + firstRow05
-            + '&firstRow06=' + firstRow06;
-        $.ajax({
-            type: 'GET',
-            url: url,
-            data: {},
-            success: function (response) {
-                let num = response['my_num'];
-                console.log(num)
-
-                let my_num = [
-                    firstRow01,
-                    firstRow02,
-                    firstRow03,
-                    firstRow04,
-                    firstRow05,
-                    firstRow06
-                ];
-
-                // 내 번호, 당첨번호 일치여부 결과
-                let testHtml = ``;
-                if (num[idx] == -1) {
-                    testHtml += `<span>${my_num[idx]}</span>`
+            // 내 번호, 당첨번호 일치여부
+            let testHtml = ``;
+            for(let i = 0; i < winNo.length; i++) {
+                if(winNo[i] == -1) {
+                    testHtml += `<span>${myNo[i]}</span>`
                 } else {
-                    testHtml += `<span class="equal">${my_num[idx]}</span>`
-                }
-                $('.match-num').append(testHtml);
-
-                // 입력한 행 인풋 스타일 추가
-                _this.each(function() {
-                    let input = $(this).find('input[type="text"]');
-
-                    if (input.val() != '') {
-                        input.addClass('on');
-                    }
-                });
-
-                // 내 번호, 당첨번호 대조한 결과
-                if (num.indexOf(-1) > -1) { // num에 -1이 존재한다
-                    _this.find('.win-result').text('낙첨');
-                } else {
-                    _this.find('.win-result').text('당첨');
+                    testHtml += `<span class="equal">${myNo[i]}</span>`
                 }
             }
 
-        });
-    });
+            $('.table-num').find('tr').each(function(idx) {
+                let objIdx = $(obj).eq(idx)
+                let input = objIdx.find('input[type="text"]');
 
+                // 입력한 행 인풋 스타일 추가
+                if(input.val() != '') {
+                   input.addClass('on');
+                }
+
+                // 내 번호, 당첨번호 일치여부 추가
+                objIdx.find('.match-num').html(testHtml);
+            });
+
+            // 당첨결과
+            if (winNo.indexOf(-1) > -1) { // winNo에 -1이 존재한다면
+                $(obj).find('.win-result').text('낙첨');
+            } else {
+                $(obj).find('.win-result').text('당첨');
+            }
+        }
+    });
+}
+
+function test() {
+    $('.table-num').find('tr').each(function () {
+        let nums = '';
+
+        $(this).find('.input-form input').each(function () {
+            if ($(this).val() == '') {
+                return false;
+            } else {
+                nums += $(this).val() + ',';
+            }
+        });
+
+        nums = nums.substring(0, nums.length - 1); // 시작 인덱스부터 종료 인덱스 전까지 문자열의 부분 문자열을 반환
+        let numArr = nums.split(',');
+        let count = 0;
+
+        for(let i = 0; i < numArr.length; i++) {
+            if (numArr[i] !== '') {
+                count = count + 1;
+            }
+        }
+
+        // 6개의 번호를 모두 입력해야만 조회 요청
+        if (count !== 6 && count !== 0) {
+            alert('빈칸을 입력해주세요.');
+            return false;
+        }else if (count === 6) {
+            testForRequest($(this), numArr);
+        }
+    });
 }
 
 function checkNumber() {
     $('.table-num').find('tr').each(function() {
         $(this).find('input[type="text"]').blur(function() { // blur는 버블링이 일어나지 않음
             let input = $(this);
-            let chk = false;
 
             if(input.val() == '') {
                 return;
@@ -117,8 +126,10 @@ function checkNumber() {
                 alert('1 ~ 45 사이의 숫자만 입력 가능합니다.');
                 input.val('').focus();
                 return;
+            } else {
+                // 각 행 중복체크
+
             }
-            // 입력한 숫자 중복체크 추가해야함
         });
     });
 }
@@ -191,3 +202,4 @@ $(document).ready(function() {
     showStore();
     storeMap();
 });
+
