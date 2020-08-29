@@ -8,7 +8,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=rzd6uykue3"></script>
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d50099b3f24ab32a65901411e7a93978&libraries=services"></script>
+        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=rzd6uykue3&submodules=geocoder"></script>
         <script src="../static/main.js"></script>
     </head>
     <body>
@@ -172,7 +173,7 @@
                         </table>
                     </div>
                     <div class="btn-wrap">
-                        <button type="button" class="btn-type btn-reset" onclick="empty()">초기화</button>
+                        <button type="button" class="btn-type btn-reset">초기화</button>
                         <button type="button" class="btn-type btn-confirm" onclick="test()">확인</button>
                     </div>
                 </section>
@@ -210,9 +211,7 @@
                 <section class="sec sec-store">
                     <h3 class="store-tit">최다 당첨판매점</h3>
                     <div class="store-wrap">
-                        <div id="map" class="store-map">
-                            MAP
-                        </div>
+                        <div id="map" class="store-map"></div>
                         <div class="store-list">
                             <div class="table-wrap table-store">
                                 <table>
