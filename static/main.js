@@ -26,9 +26,6 @@ function showNumber() {
 }
 
 function getNumberForRequest(obj, myNo) {
-    $('.match-num').empty();
-    $('.win-result').empty();
-
     let lottoNo = myNo.join(',')
     console.log(myNo.join(','))
 
@@ -177,6 +174,7 @@ function showStore() {
             if (response["result"] == "success") {
                 let stores = response['store'];
                 let locations = [];
+                console.log(locations)
 
                 for(let i = 0; i < stores.length; i++) {
                     // 판매점 리스트 노출
@@ -201,9 +199,7 @@ function showStore() {
                     });
 
                     // 마커 정보
-
                     locations.push([`<div class="wrap"><div class="text-box"><h4>${store['name']}</h4><p>${addr}</p></div>`, lat, lng])
-                    console.log(locations)
                     let customicon = 'http://drive.google.com/uc?export=view&id=1tZgPtboj4mwBYT6cZlcY36kYaQDR2bRM' // 마커 이미지
                     let infowindow = new google.maps.InfoWindow(); // 인포윈도우
 
@@ -243,6 +239,9 @@ function resetResult() {
 }
 
 $(document).ready(function() {
+    $('.match-num').empty();
+    $('.win-result').empty();
+
     showNumber();
     checkNumber()
     showResult();
