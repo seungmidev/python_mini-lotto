@@ -7,7 +7,11 @@ db = client.dblotto
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
 
 
+# 매주 토요일 밤 10시 업데이트
+
+
 def get_lotto():
+    # 로또 API 최신회차 당첨정보 가져오기
     last_data = db.win_num.find({}, {'_id': False}).sort('drwNo', -1).limit(1)
     last_drwno = last_data[0]['drwNo'] + 1
 
@@ -36,11 +40,12 @@ def get_lotto():
 
 
 def get_lotto_result():
+    # 동행복권 최신회차 당첨정보 가져오기
     data = requests.get('https://dhlottery.co.kr/gameResult.do?method=byWin', headers=headers)
-
     soup = BeautifulSoup(data.text, 'html.parser')
     wins = soup.select('.tbl_data tbody tr')
 
+    # 매주 새로 크롤링 해오기 위해서 칼럼 삭제 후 추가
     db.win_result.delete_many({})
 
     for win in wins:
@@ -60,11 +65,12 @@ def get_lotto_result():
 
 
 def get_lotto_store():
+    # 동행복권 최다 당첨판매점 가져오기
     data = requests.get('https://dhlottery.co.kr/store.do?method=topStoreRank&rank=2&pageGubun=L645', headers=headers)
-
     soup = BeautifulSoup(data.text, 'html.parser')
     stores = soup.select('.tbl_data tbody tr')
 
+    # 매주 새로 크롤링 해오기 위해서 칼럼 삭제 후 추가
     db.store.delete_many({})
 
     for store in stores:
