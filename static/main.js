@@ -212,7 +212,7 @@ function showStore() {
                     //마커 정보
 
                     let locations = [];
-                    locations.push([`<div class="wrap"><div class="text-box"><h4>${store['name']}</h4><div class="img-box"><img src="https://image.shutterstock.com/image-vector/palace-icon-outline-vector-web-260nw-1046855677.jpg"></div><p>${addr}</p></div>`, lat, lng])
+                    locations.push([`<div class="wrap"><div class="text-box"><h4>${store['name']}</h4><p>${addr}</p></div>`, lat, lng])
                     console.log(locations)
 
 
@@ -222,7 +222,7 @@ function showStore() {
                     //인포윈도우
                     let infowindow = new google.maps.InfoWindow();
 
-                    //마커 생성
+                    //마커 생성-
                     let marker, j;
                     for (j = 0; j < locations.length; j++) {
                         marker = new google.maps.Marker({
