@@ -1,13 +1,7 @@
-function empty() {
+function showNumber() {
     $('.win-tit').empty();
     $('.win-num').empty();
-    $('.match-num').empty();
-    $('.win-result').empty();
-    $('.table-result tbody').empty();
-    $('.table-store tbody').empty();
-}
 
-function showNum() {
     $.ajax({
         type: 'GET',
         url: '/win-num',
@@ -31,7 +25,10 @@ function showNum() {
     });
 }
 
-function getNumForRequest(obj, myNo) {
+function getNumberForRequest(obj, myNo) {
+    $('.match-num').empty();
+    $('.win-result').empty();
+
     let lottoNo = myNo.join(',')
     console.log(myNo.join(','))
 
@@ -74,7 +71,7 @@ function getNumForRequest(obj, myNo) {
     });
 }
 
-function getNum() {
+function getNumber() {
     $('.table-num').find('tr').each(function () {
         let nums = '';
 
@@ -102,7 +99,7 @@ function getNum() {
             alert('빈칸을 입력해주세요.');
             return false;
         } else if (count === 6) {
-            getNumForRequest($(this), numArr);
+            getNumberForRequest($(this), numArr);
         }
     });
 }
@@ -145,6 +142,8 @@ function checkNumber() {
 }
 
 function showResult() {
+    $('.table-result tbody').empty();
+
     $.ajax({
         type: 'GET',
         url: '/win-result',
@@ -168,6 +167,8 @@ function showResult() {
 }
 
 function showStore() {
+    $('.table-store tbody').empty();
+
     $.ajax({
         type: 'GET',
         url: '/store',
@@ -235,15 +236,14 @@ function showStore() {
     });
 }
 
-function reset() {
+function resetResult() {
     $('.match-num').empty();
     $('.win-result').empty();
     $('.input-form input').val('').removeClass('on');
 }
 
 $(document).ready(function() {
-    empty();
-    showNum();
+    showNumber();
     checkNumber()
     showResult();
     showStore();
