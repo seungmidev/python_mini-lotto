@@ -28,7 +28,8 @@ def get_lotto():
                 'drwtNo3': result['drwtNo3'],
                 'drwtNo4': result['drwtNo4'],
                 'drwtNo5': result['drwtNo5'],
-                'drwtNo6': result['drwtNo6']
+                'drwtNo6': result['drwtNo6'],
+                'bnusNo': result['bnusNo']
             }
 
         db.win_num.insert_one(lotto_list)
