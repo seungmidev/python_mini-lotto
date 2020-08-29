@@ -11,23 +11,27 @@ def get_lotto():
     last_data = db.win_num.find({}, {'_id': False}).sort('drwNo', -1).limit(1)
     last_drwno = last_data[0]['drwNo'] + 1
 
-    base_url = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=' + str(last_drwno)
+    base_url = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo='
 
-    data = requests.get(base_url, headers=headers)
-    result = data.json()
+    while True:
+        data = requests.get(base_url + str(last_drwno), headers=headers)
+        result = data.json()
 
-    lotto_list = {
-        'drwNo': result['drwNo'],
-        'drwNoDate': result['drwNoDate'],
-        'drwtNo1': result['drwtNo1'],
-        'drwtNo2': result['drwtNo2'],
-        'drwtNo3': result['drwtNo3'],
-        'drwtNo4': result['drwtNo4'],
-        'drwtNo5': result['drwtNo5'],
-        'drwtNo6': result['drwtNo6']
-    }
+        if result['returnValue'] == 'fail':
+            break
+        else:
+            lotto_list = {
+                'drwNo': result['drwNo'],
+                'drwNoDate': result['drwNoDate'],
+                'drwtNo1': result['drwtNo1'],
+                'drwtNo2': result['drwtNo2'],
+                'drwtNo3': result['drwtNo3'],
+                'drwtNo4': result['drwtNo4'],
+                'drwtNo5': result['drwtNo5'],
+                'drwtNo6': result['drwtNo6']
+            }
 
-    db.win_num.insert_one(lotto_list)
+        db.win_num.insert_one(lotto_list)
 
 
 def get_lotto_result():
@@ -66,11 +70,13 @@ def get_lotto_store():
         num = store.select_one('td:nth-child(1)').text
         name = store.select_one('td:nth-child(2)').text
         count = store.select_one('td:nth-child(3)').text
+        addr = store.select_one('td:nth-child(4)').text
 
         store_list = {
             'num': num,
             'name': name,
-            'count': count
+            'count': count,
+            'addr': addr
         }
 
         db.store.insert_one(store_list)
