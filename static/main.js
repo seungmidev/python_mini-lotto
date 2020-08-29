@@ -237,7 +237,7 @@ function showStore() {
                             map: map
                         });
 
-                        google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        google.maps.event.addListener(marker, 'click', (function (marker, j) {
                             return function () {
 
                                 //html로 표시될 인포 윈도우의 내용
@@ -265,11 +265,11 @@ function showStore() {
     });
 }
 
-function initMap(listener) {
-    //지도 스타일
-
+function reset() {
+    $('.match-num').empty();
+    $('.win-result').empty();
+    $('.input-form input').val('').removeClass('on');
 }
-
 
 $(document).ready(function() {
     empty();
