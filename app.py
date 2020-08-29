@@ -12,6 +12,7 @@ import datetime
 from config import *
 import geocoder
 import pprint
+import copy
 import googlemaps
 from init_db import get_lotto, get_lotto_result, get_lotto_store
 
@@ -41,7 +42,23 @@ def get_result():
 @app.route('/store', methods=['GET'])
 def get_store():
     result = list(db.store.find({}, {'_id': False}))
-    return jsonify({'result': 'success', 'store': result})
+
+    temp_result = []
+    gmaps = googlemaps.Client(key='AIzaSyBHlzY-NotWWUgA8KJRoCV9JwlyPb5IgqE')
+    for i, store in enumerate(result):
+        temp_store = copy.deepcopy(store)
+        try:
+            geo = gmaps.geocode(store['addr'])
+            lat = geo[0]['geometry']['location']['lat']
+            lng = geo[0]['geometry']['location']['lng']
+            temp_store['lat'] = lat
+            temp_store['lng'] = lng
+        except:
+            temp_store['lat'] = 0
+            temp_store['lng'] = 0
+        temp_result.append(temp_store)
+
+    return jsonify({'result': 'success', 'store': temp_result})
 
 
 @app.route('/my-num', methods=['GET'])
@@ -171,12 +188,6 @@ def search_map(search_text):
 
 
 # search_map('서울시')
-
-
-# google map
-gmaps =googlemaps.Client(key='AIzaSyBHlzY-NotWWUgA8KJRoCV9JwlyPb5IgqE')
-geo=gmaps.geocode('대한민국 서울특별시 강남구 대치2동 514')
-print(geo)
 
 
 # 매주 토요일 밤 9시 업데이트

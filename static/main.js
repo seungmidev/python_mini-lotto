@@ -181,8 +181,10 @@ function showStore() {
         success: function (response) {
             if (response["result"] == "success") {
                 let stores = response['store'];
+                console.log(stores)
 
                 for(let i = 0; i < stores.length; i++) {
+                    // 판매점 리스트 노출
                     let store = stores[i];
 
                     let winHtml = `<tr>
@@ -192,115 +194,82 @@ function showStore() {
                                    </tr>`
 
                     $('.table-store tbody').append(winHtml);
+
+                    // 판매점 주소랑 지도 연동
+                    let addr = store['addr'];
+                    let lat = store['lat'];
+                    let lng = store['lng'];
+
+                    let map = new google.maps.Map(document.getElementById('map'), {
+                        // 처음 중심 좌표
+                        center: {
+                            lat: 37.587624,
+                            lng: 126.976020
+                        },
+                        zoom: 7
+                    });
+
+                    //마커 정보
+
+                    let locations = [];
+                    locations.push([`<div class="wrap"><div class="text-box"><h4>${store['name']}</h4><div class="img-box"><img src="https://image.shutterstock.com/image-vector/palace-icon-outline-vector-web-260nw-1046855677.jpg"></div><p>${addr}</p></div>`, lat, lng])
+                    console.log(locations)
+
+
+                    //마커 이미지
+                    let customicon = 'http://drive.google.com/uc?export=view&id=1tZgPtboj4mwBYT6cZlcY36kYaQDR2bRM'
+
+                    //인포윈도우
+                    let infowindow = new google.maps.InfoWindow();
+
+                    //마커 생성
+                    let marker, j;
+                    for (j = 0; j < locations.length; j++) {
+                        marker = new google.maps.Marker({
+
+                            //마커의 위치
+                            position: new google.maps.LatLng(locations[j][1], locations[j][2]),
+
+                            //마커 아이콘
+                            icon: customicon,
+
+                            //마커를 표시할 지도
+                            map: map
+                        });
+
+                        google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                            return function () {
+
+                                //html로 표시될 인포 윈도우의 내용
+                                infowindow.setContent(locations[j][0]);
+
+                                //인포윈도우가 표시될 위치
+                                infowindow.open(map, marker);
+                            }
+                        })(marker, j));
+
+                        if (marker) {
+                            marker.addListener('click', function () {
+
+                                //중심 위치를 클릭된 마커의 위치로 변경
+                                map.setCenter(this.getPosition());
+
+                                //마커 클릭 시의 줌 변화
+                                map.setZoom(14);
+                            });
+                        }
+                    }
                 }
             }
         }
     });
 }
 
-function storeMap() {
-    let mapOptions = {
-        center: new naver.maps.LatLng(37.3595704, 127.105399),
-        zoom: 10
-    };
-
-    let map = new naver.maps.Map('map', mapOptions);
+function initMap(listener) {
+    //지도 스타일
 
 }
 
-/*function storeMap() {
-    let mapContainer = document.getElementById('map'), // 지도를 표시할 div
-    mapOption = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 13 // 지도의 확대 레벨
-    };
-
-    // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-    let map = new kakao.maps.Map(mapContainer, mapOption);
-}*/
-
-/*function storeMap() {
-    $.ajax({
-        type: 'GET',
-        url: '/store',
-        data: {},
-        success: function (response) {
-            let mapContainer = document.getElementById('map'), // 지도를 표시할 div
-            mapOption = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                level: 13 // 지도의 확대 레벨
-            };
-
-            // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-            let map = new kakao.maps.Map(mapContainer, mapOption);
-
-            let address = '';
-            let stores = response['store'];
-            for(let i = 0; i < stores.length; i++) {
-                let addr = stores[i]['addr'];
-
-                address += addr + ',';
-            }
-            address = address.substring(0, address.length - 1);
-            let address_arr = address.split(',');
-            console.log(address_arr)
-
-            let geocoder = new kakao.maps.services.Geocoder();
-
-            // 주소로 좌표를 검색합니다
-            function marker(number, address) {
-                geocoder.addressSearch(address , function(result, status) {
-
-                    // 정상적으로 검색이 완료됐으면
-                     if (status === kakao.maps.services.Status.OK) {
-
-                        let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-                        let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-                        // 결과값으로 받은 위치를 마커로 표시합니다
-                        for(let i = 0; i < address_arr.length; i++) {
-                            let name = stores[i]['name'];
-                            console.log(name)
-
-                            // 마커 이미지의 이미지 크기 입니다
-                            let imageSize = new kakao.maps.Size(24, 35);
-
-                            // 마커 이미지를 생성합니다
-                            let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
-                           let marker = new kakao.maps.Marker({
-                               map: map,
-                               position: coords,
-                               image : markerImage,
-                               clickable: true
-                           });
-
-                           // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
-                            let iwContent = `<div style="padding:5px;">test</div>`
-
-                           // 인포윈도우로 장소에 대한 설명을 표시합니다
-                            let infowindow = new kakao.maps.InfoWindow({
-                                content: iwContent
-                            });
-                            infowindow.open(map, marker);
-
-                            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-                            map.setCenter(coords);
-
-                            kakao.maps.event.addListener(marker, 'click', function() {
-                                  // 마커 위에 인포윈도우를 표시합니다
-                                  infowindow.open(map, marker);
-                            });
-                        }
-                    }
-                });
-            }
-            for(let i = 0; i < address_arr.length; i++) {
-                marker(i + 1, address_arr[i]);
-            }
-        }
-    });
-}*/
 
 $(document).ready(function() {
     empty();
@@ -308,6 +277,5 @@ $(document).ready(function() {
     checkNumber()
     showResult();
     showStore();
-    storeMap();
 });
 
