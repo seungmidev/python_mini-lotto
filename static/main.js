@@ -15,10 +15,8 @@ function showNum() {
         success: function (response) {
             if (response["result"] == "success") {
                 let win_num = response['win_num'][0];
-
                 let tempHtml = `${win_num['drwNo']}회 <span>(${win_num['drwNoDate']})</span>`;
                 $('.win-tit').append(tempHtml);
-
                 let numHtml = `<span class="win-num-item">${win_num['drwtNo1']}</span>
                                <span class="win-num-item">${win_num['drwtNo2']}</span>
                                <span class="win-num-item">${win_num['drwtNo3']}</span>
@@ -27,14 +25,13 @@ function showNum() {
                                <span class="win-num-item">${win_num['drwtNo6']}</span>
                                <span class="win-num-item plus">+</span>
                                <span class="win-num-item">${win_num['bnusNo']}</span>`
-
                 $('.win-num').append(numHtml);
             }
         }
     });
 }
 
-function testForRequest(obj, myNo) {
+function getNumForRequest(obj, myNo) {
     let lottoNo = myNo.join(',')
     console.log(myNo.join(','))
 
@@ -47,26 +44,24 @@ function testForRequest(obj, myNo) {
             console.log(winNo)
 
             // 내 번호, 당첨번호 일치여부
-            let testHtml = ``;
+            let myHtml = ``;
             for(let i = 0; i < winNo.length; i++) {
                 if(winNo[i] == -1) {
-                    testHtml += `<span>${myNo[i]}</span>`
+                    myHtml += `<span>${myNo[i]}</span>`
                 } else {
-                    testHtml += `<span class="equal">${myNo[i]}</span>`
+                    myHtml += `<span class="equal">${myNo[i]}</span>`
                 }
             }
 
             $('.table-num').find('tr').each(function(idx) {
                 let objIdx = $(obj).eq(idx)
                 let input = objIdx.find('input[type="text"]');
-
                 // 입력한 행 인풋 스타일 추가
                 if(input.val() != '') {
                    input.addClass('on');
                 }
-
                 // 내 번호, 당첨번호 일치여부 추가
-                objIdx.find('.match-num').html(testHtml);
+                objIdx.find('.match-num').html(myHtml);
             });
 
             // 당첨결과
@@ -79,10 +74,11 @@ function testForRequest(obj, myNo) {
     });
 }
 
-function test() {
+function getNum() {
     $('.table-num').find('tr').each(function () {
         let nums = '';
 
+        // 입력한 값 가져오기
         $(this).find('.input-form input').each(function () {
             if ($(this).val() == '') {
                 return false;
@@ -105,8 +101,8 @@ function test() {
         if (count !== 6 && count !== 0) {
             alert('빈칸을 입력해주세요.');
             return false;
-        }else if (count === 6) {
-            testForRequest($(this), numArr);
+        } else if (count === 6) {
+            getNumForRequest($(this), numArr);
         }
     });
 }
@@ -114,14 +110,14 @@ function test() {
 function checkNumber() {
     $('.table-num').find('tr').each(function() {
         let objId = $(this)
-        objId.find('input[type="text"]').blur(function() { // blur는 버블링이 일어나지 않음
+        objId.find('input[type="text"]').blur(function() { // blur() 버블링이 일어나지 않음
             let input = $(this);
-            let id = eval($(objId).find(this).attr('id').slice(-1));
+            let id = eval($(objId).find(this).attr('id').slice(-1)); // eval() 문자로 표현된 코드를 실행
             let check = false;
 
             if(input.val() == '') {
                 return;
-            } else if(isNaN(input.val())) { // isNaN() -> Not a Number 타입이 숫자인지 아닌지 판별
+            } else if(isNaN(input.val())) { // isNaN() Not a Number 타입이 숫자인지 아닌지 판별
                 alert('숫자만 입력 가능합니다.');
                 input.val('').focus();
                 return;
@@ -137,6 +133,7 @@ function checkNumber() {
                         return false;
                     }
                 });
+
                 if(check) {
                     alert('중복된 값은 입력할 수 없습니다.');
                     input.val('').focus();
@@ -155,17 +152,14 @@ function showResult() {
         success: function (response) {
             if (response["result"] == "success") {
                 let win_result = response['win_result'];
-
                 for(let i = 0; i < win_result.length; i++) {
                     let win = win_result[i];
-
                     let winHtml = `<tr>
                                        <td>${win['rank']}</td>
                                        <td>${win['game']}</td>
                                        <td>${win['amount']}</td>
                                        <td>${win['amount_one']}</td>
                                    </tr>`
-
                     $('.table-result tbody').append(winHtml);
                 }
             }
@@ -181,81 +175,57 @@ function showStore() {
         success: function (response) {
             if (response["result"] == "success") {
                 let stores = response['store'];
-                console.log(stores)
+                let locations = [];
 
                 for(let i = 0; i < stores.length; i++) {
                     // 판매점 리스트 노출
                     let store = stores[i];
-
                     let winHtml = `<tr>
                                        <td>${store['num']}</td>
                                        <td>${store['name']}</td>
                                        <td>${store['count']}</td>
                                    </tr>`
-
                     $('.table-store tbody').append(winHtml);
 
                     // 판매점 주소랑 지도 연동
                     let addr = store['addr'];
                     let lat = store['lat'];
                     let lng = store['lng'];
-
                     let map = new google.maps.Map(document.getElementById('map'), {
-                        // 처음 중심 좌표
                         center: {
-                            lat: 37.587624,
-                            lng: 126.976020
+                            lat: 36.4769958,
+                            lng: 127.6195843
                         },
                         zoom: 7
                     });
 
-                    //마커 정보
+                    // 마커 정보
 
-                    let locations = [];
                     locations.push([`<div class="wrap"><div class="text-box"><h4>${store['name']}</h4><p>${addr}</p></div>`, lat, lng])
                     console.log(locations)
+                    let customicon = 'http://drive.google.com/uc?export=view&id=1tZgPtboj4mwBYT6cZlcY36kYaQDR2bRM' // 마커 이미지
+                    let infowindow = new google.maps.InfoWindow(); // 인포윈도우
 
-
-                    //마커 이미지
-                    let customicon = 'http://drive.google.com/uc?export=view&id=1tZgPtboj4mwBYT6cZlcY36kYaQDR2bRM'
-
-                    //인포윈도우
-                    let infowindow = new google.maps.InfoWindow();
-
-                    //마커 생성-
+                    // 마커 생성
                     let marker, j;
-                    for (j = 0; j < locations.length; j++) {
+                    for(j = 0; j < locations.length; j++) {
                         marker = new google.maps.Marker({
-
-                            //마커의 위치
-                            position: new google.maps.LatLng(locations[j][1], locations[j][2]),
-
-                            //마커 아이콘
-                            icon: customicon,
-
-                            //마커를 표시할 지도
-                            map: map
+                            position: new google.maps.LatLng(locations[j][1], locations[j][2]), // 마커의 위치
+                            icon: customicon, // 마커 아이콘
+                            map: map // 마커를 표시할 지도
                         });
 
                         google.maps.event.addListener(marker, 'click', (function (marker, j) {
-                            return function () {
-
-                                //html로 표시될 인포 윈도우의 내용
-                                infowindow.setContent(locations[j][0]);
-
-                                //인포윈도우가 표시될 위치
-                                infowindow.open(map, marker);
+                            return function() {
+                                infowindow.setContent(locations[j][0]); // html로 표시될 인포 윈도우의 내용
+                                infowindow.open(map, marker); // 인포윈도우가 표시될 위치
                             }
                         })(marker, j));
 
-                        if (marker) {
-                            marker.addListener('click', function () {
-
-                                //중심 위치를 클릭된 마커의 위치로 변경
-                                map.setCenter(this.getPosition());
-
-                                //마커 클릭 시의 줌 변화
-                                map.setZoom(14);
+                        if(marker) {
+                            marker.addListener('click', function() {
+                                map.setCenter(this.getPosition()); // 중심 위치를 클릭된 마커의 위치로 변경
+                                map.setZoom(14); // 마커 클릭 시 줌
                             });
                         }
                     }
