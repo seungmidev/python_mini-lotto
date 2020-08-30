@@ -1,9 +1,9 @@
 from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
-import schedule
+from apscheduler.schedulers.background import BackgroundScheduler
 import copy
 import googlemaps
-# from init_db import get_lotto, get_lotto_result, get_lotto_store
+from init_db import get_lotto, get_lotto_result, get_lotto_store
 
 app = Flask(__name__)
 client = MongoClient('localhost', 27017)
@@ -85,7 +85,14 @@ def get_my_num():
 
 
 # 매주 토요일 밤 10시 업데이트
-# schedule.every().saturday.at("22:00").do(get_lotto_result, get_lotto_store, get_lotto)
+sched = BackgroundScheduler(daemon=True)
+sched.add_job(get_lotto_result, 'cron', minute="00", hour="22", day_of_week="sat")
+sched.add_job(get_lotto_store, 'cron', minute="00", hour="22", day_of_week="sat")
+sched.add_job(get_lotto, 'cron', minute="00", hour="22", day_of_week="sat")
+sched.start()
+
+
+#schedule.every().saturday.at("22:00").do(get_lotto_result, get_lotto_store, get_lotto)
 
 
 if __name__ == '__main__':
