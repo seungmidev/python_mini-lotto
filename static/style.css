@@ -12,7 +12,7 @@
 #container .table-wrap {}
 #container .table-wrap table {width:100%;}
 #container .table-wrap th {padding:10px; background-color:rgba(224, 224, 224, 0.4); border:1px solid #ccc;}
-#container .table-wrap td {padding:10px; text-align:center; border:1px solid #ccc;}
+#container .table-wrap td {padding:10px; font-size:14px; text-align:center; border:1px solid #ccc;}
 
 #container .btn-wrap {margin-top:30px; font-size:0; text-align:center;}
 #container .btn-wrap .btn-type {display:inline-block; width:160px; height:45px; margin:0 10px; font-size:16px; line-height:45px; font-weight:700; border:0; border-radius:5px;}
@@ -35,4 +35,4 @@
 #container .sec-store .store-wrap:after {content:''; display:block; clear:both;}
 #container .sec-store .store-map {float:left; width:50%; height:492px; background-color:#ddd;}
 #container .sec-store .store-list {float:left; width:50%; height:492px; overflow-y:auto;}
-
+#container .sec-store .table-store .store-tit {font-size:14px;}

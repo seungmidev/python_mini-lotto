@@ -181,7 +181,7 @@ function showStore() {
                     let store = stores[i];
                     let winHtml = `<tr>
                                        <td>${store['num']}</td>
-                                       <td>${store['name']}</td>
+                                       <td><span class="store-tit">${store['name']}</span></td>
                                        <td>${store['count']}</td>
                                    </tr>`
                     $('.table-store tbody').append(winHtml);

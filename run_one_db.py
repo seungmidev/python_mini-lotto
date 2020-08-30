@@ -7,32 +7,32 @@ db = client.dblotto
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
 
 
-# 매주 토요일 밤 10시 업데이트
-
-
-def get_lotto():
-    # 로또 API 최신회차 당첨정보 가져오기
-    last_data = db.win_num.find({}, {'_id': False}).sort('drwNo', -1).limit(1)
-    last_drwno = last_data[0]['drwNo'] + 1
-
+def get_lotto_api():
+    # 로또 API 1회부터 마지막 회차까지 당첨정보 가져오기 - DB 저장용
     base_url = 'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo='
+    count = 1
 
-    data = requests.get(base_url + str(last_drwno), headers=headers)
-    result = data.json()
+    while True:
+        data = requests.get(base_url + str(count), headers=headers)
+        result = data.json()
 
-    lotto_list = {
-        'drwNo': result['drwNo'],
-        'drwNoDate': result['drwNoDate'],
-        'drwtNo1': result['drwtNo1'],
-        'drwtNo2': result['drwtNo2'],
-        'drwtNo3': result['drwtNo3'],
-        'drwtNo4': result['drwtNo4'],
-        'drwtNo5': result['drwtNo5'],
-        'drwtNo6': result['drwtNo6'],
-        'bnusNo': result['bnusNo']
-    }
+        if result['returnValue'] == 'fail':
+            break
+        else:
+            lotto_list = {
+                'drwNo': result['drwNo'],
+                'drwNoDate': result['drwNoDate'],
+                'drwtNo1': result['drwtNo1'],
+                'drwtNo2': result['drwtNo2'],
+                'drwtNo3': result['drwtNo3'],
+                'drwtNo4': result['drwtNo4'],
+                'drwtNo5': result['drwtNo5'],
+                'drwtNo6': result['drwtNo6'],
+                'bnusNo': result['bnusNo']
+            }
 
-    db.win_num.insert_one(lotto_list)
+            db.win_num.insert_one(lotto_list)
+            count = count + 1
 
 
 def get_lotto_result():
@@ -40,9 +40,6 @@ def get_lotto_result():
     data = requests.get('https://dhlottery.co.kr/gameResult.do?method=byWin', headers=headers)
     soup = BeautifulSoup(data.text, 'html.parser')
     wins = soup.select('.tbl_data tbody tr')
-
-    # 매주 새로 크롤링 해오기 위해서 칼럼 삭제 후 추가
-    db.win_result.delete_many({})
 
     for win in wins:
         rank = win.select_one('td:nth-child(1)').text
@@ -66,9 +63,6 @@ def get_lotto_store():
     soup = BeautifulSoup(data.text, 'html.parser')
     stores = soup.select('.tbl_data tbody tr')
 
-    # 매주 새로 크롤링 해오기 위해서 칼럼 삭제 후 추가
-    db.store.delete_many({})
-
     for store in stores:
         num = store.select_one('td:nth-child(1)').text
         name = store.select_one('td:nth-child(2)').text
@@ -83,3 +77,8 @@ def get_lotto_store():
         }
 
         db.store.insert_one(store_list)
+
+
+get_lotto_api()
+get_lotto_result()
+get_lotto_store()
