@@ -212,7 +212,7 @@ function showStore() {
                             map: map // 마커를 표시할 지도
                         });
 
-                        google.maps.event.addListener(marker, 'click', (function (marker, j) {
+                        google.maps.event.addListener(marker, 'click', (function(marker, j) {
                             return function() {
                                 infowindow.setContent(locations[j][0]); // html로 표시될 인포 윈도우의 내용
                                 infowindow.open(map, marker); // 인포윈도우가 표시될 위치
@@ -223,6 +223,16 @@ function showStore() {
                             marker.addListener('click', function() {
                                 map.setCenter(this.getPosition()); // 중심 위치를 클릭된 마커의 위치로 변경
                                 map.setZoom(14); // 마커 클릭 시 줌
+                            });
+
+                            // 리스트 - 지도연동
+                            let store_tit = $('.table-store tr').eq(j).find('.store-tit');
+                            store_tit.on('click', function() {
+                                //infowindow.setContent(locations[j][0]);
+                                infowindow.open(map, marker);
+
+                                map.setCenter(marker.getPosition());
+                                map.setZoom(14);
                             });
                         }
                     }

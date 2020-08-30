@@ -35,4 +35,4 @@
 #container .sec-store .store-wrap:after {content:''; display:block; clear:both;}
 #container .sec-store .store-map {float:left; width:50%; height:492px; background-color:#ddd;}
 #container .sec-store .store-list {float:left; width:50%; height:492px; overflow-y:auto;}
-#container .sec-store .table-store .store-tit {font-size:14px;}
+#container .sec-store .table-store .store-tit {font-size:14px; cursor:pointer;}
