@@ -1,26 +1,23 @@
 @import "reset.css";
 
-#wrap {width:100%; min-width:320px; margin:0 auto;}
-
-#header {position:absolute; top:0; left:0; width:100%;}
-#header .page-tit {font-size:26px; color:#fff; font-weight:400; line-height:60px; text-align:center; background-color:rgb(41, 128, 185);}
+.m-show {display:none;}
+#wrap {width:100%; min-width:320px; margin:0 auto; font-size:14px;}
 
 #container {padding-bottom:150px;}
 #container .sec {margin-top:100px; padding:0 20px;}
 #container .sec-inner {max-width:1024px; margin:0 auto;}
 #container [class *= "-tit"] {margin-bottom:20px; font-size:24px; font-weight:400;}
 
-#container .table-wrap {}
 #container .table-wrap table {width:100%;}
 #container .table-wrap th {padding:10px; font-size:15px; border:1px solid #ccc; border-top:2px solid #000;}
-#container .table-wrap td {padding:10px; font-size:14px; text-align:center; border:1px solid #ccc;}
+#container .table-wrap td {padding:10px; text-align:center; border:1px solid #ccc; word-break:break-all;}
 
 #container .btn-wrap {margin-top:30px; font-size:0; text-align:center;}
 #container .btn-wrap .btn-type {display:inline-block; width:160px; height:45px; margin:0 10px; font-size:16px; line-height:45px; font-weight:700; border:0; border-radius:5px;}
 #container .btn-wrap .btn-reset {background-color:#ddd;}
 #container .btn-wrap .btn-confirm {color:#fff; background-color:#000;}
 
-#container .sec-win {margin-top:0; padding:45px 0 55px; text-align:center; background-color:rgba(224, 224, 224, 0.4);}
+#container .sec-win {margin-top:0 !important; padding:45px 0 55px !important; text-align:center; background-color:rgba(224, 224, 224, 0.4);}
 #container .sec-win .page-tit {margin-bottom:30px; font-size:40px; font-weight:400;}
 #container .sec-win .page-tit strong {font-size:45px;}
 #container .sec-win .win-tit {font-size:26px; font-weight:700;}
@@ -28,11 +25,12 @@
 #container .sec-win .win-num {margin-top:12px; font-size:0;}
 #container .sec-win .win-num-item {display:inline-block; width:30px; height:30px; margin:0 5px; font-size:14px; font-weight:700; line-height:30px; border-radius:50%; background-color:#fff; box-shadow:2px 2px #ddd;}
 
-#container .sec-notice {margin-top:0 !important; padding:15px 20px; background-color:rgb(41, 128, 185);}
-#container .sec-notice p {font-size:14px; color:#fff; text-align:center;}
+#container .sec-notice {margin-top:0 !important; padding:15px 20px !important; background-color:rgb(41, 128, 185);}
+#container .sec-notice p {color:#fff; text-align:center;}
 
+#container .sec-my .table-num td {padding:5px 10px;}
 #container .sec-my .input-form {font-size:0;}
-#container .sec-my .input-form input {display:inline-block; width:32px; height:32px; margin:0 5px; line-height:32px; text-align:center; border:1px solid #ddd; border-radius:5px;}
+#container .sec-my .input-form input {display:inline-block; width:32px; height:32px; margin:5px; line-height:32px; text-align:center; border:1px solid #ddd; border-radius:5px;}
 #container .sec-my .input-form input.on {background-color:rgba(224, 224, 224, 0.5);}
 #container .sec-my .match-num span {margin:0 2px;}
 #container .sec-my .match-num .equal {position:relative; color:rgb(41, 128, 185); font-weight:700;}
@@ -46,4 +44,30 @@
 @media screen and (max-width:620px) {
     #container .sec-store .store-map {width:100%;}
     #container .sec-store .store-list {width:100%; height:auto; overflow:hidden;}
+}
+
+@media screen and (max-width:400px) {
+    .m-show {display:block;}
+    #wrap {font-size:12px;}
+
+    #container {padding-bottom:100px;}
+    #container .sec {margin-top:70px; padding:0 15px;}
+    #container [class *= "-tit"] {font-size:22px;}
+
+    #container .table-wrap th {font-size:13px;}
+    #container .table-wrap td {padding:6px 5px;}
+
+    #container .btn-wrap .btn-type {width:135px; height:35px; margin:0 5px; font-size:14px; line-height:35px;}
+
+    #container .sec-win .page-tit {font-size:36px;}
+    #container .sec-win .win-tit {font-size:22px;}
+    #container .sec-win .win-num-item {width:25px; height:25px; margin:0 3px; font-size:12px; line-height:25px;}
+
+    #container .sec-notice {padding:15px !important;}
+
+    #container .sec-my .table-num td {padding:5px 0px;}
+    #container .sec-my .input-form input {width:28px; height:28px; line-height:28px; margin:3px; font-size:12px;}
+
+    #container .sec-store .store-map {height:400px;}
+    #container .sec-store .table-store .store-tit {font-size:12px;}
 }

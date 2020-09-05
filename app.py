@@ -86,11 +86,11 @@ def get_my_num():
 
 # 매주 토요일 밤 10시 업데이트
 sched = BackgroundScheduler(daemon=True)
-sched.add_job(get_lotto_result, 'cron', minute="00", hour="22", day_of_week="sat")
-sched.add_job(get_lotto_store, 'cron', minute="00", hour="22", day_of_week="sat")
-sched.add_job(get_lotto, 'cron', minute="00", hour="22", day_of_week="sat")
+sched.add_job(get_lotto_result, 'cron', minute="00", hour="21", day_of_week="sat")
+sched.add_job(get_lotto_store, 'cron', minute="00", hour="21", day_of_week="sat")
+sched.add_job(get_lotto, 'cron', minute="00", hour="21", day_of_week="sat")
 sched.start()
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=8000, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)

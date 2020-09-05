@@ -42,7 +42,7 @@ def get_lotto_result():
     wins = soup.select('.tbl_data tbody tr')
 
     # 매주 새로 크롤링 해오기 위해서 칼럼 삭제 후 추가
-    db.win_result.delete_many({})
+    db.win_result.remove({})
 
     for win in wins:
         rank = win.select_one('td:nth-child(1)').text
@@ -67,7 +67,7 @@ def get_lotto_store():
     stores = soup.select('.tbl_data tbody tr')
 
     # 매주 새로 크롤링 해오기 위해서 칼럼 삭제 후 추가
-    db.store.delete_many({})
+    db.store.remove({})
 
     for store in stores:
         num = store.select_one('td:nth-child(1)').text
