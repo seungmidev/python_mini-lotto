@@ -163,6 +163,42 @@ function showResult() {
     });
 }
 
+
+function testMethod(lat, lng, name, addr) {
+    let customicon = 'http://drive.google.com/uc?export=view&id=1tZgPtboj4mwBYT6cZlcY36kYaQDR2bRM' // 마커 이미지
+    let infowindow = new google.maps.InfoWindow();
+    let marker;
+
+    let map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+            lat: lat,
+            lng: lng
+        },
+        zoom: 14,
+        icon: customicon,
+    });
+    marker = new google.maps.Marker({
+        position: new google.maps.LatLng(lat, lng), // 마커의 위치
+        icon: customicon, // 마커 아이콘
+        map: map // 마커를 표시할 지도
+    });
+
+    google.maps.event.addListener(marker, 'click', (function(marker) {
+        return function() {
+            infowindow.setContent(`test`); // html로 표시될 인포 윈도우의 내용
+            infowindow.open(map, marker); // 인포윈도우가 표시될 위치
+        }
+    })(marker));
+
+    if(marker) {
+        marker.addListener('click', function() {
+            map.setCenter(this.getPosition()); // 중심 위치를 클릭된 마커의 위치로 변경
+            map.setZoom(14); // 마커 클릭 시 줌
+        });
+    }
+}
+
+
 function showStore() {
     $('.table-store tbody').empty();
 
@@ -179,17 +215,19 @@ function showStore() {
                 for(let i = 0; i < stores.length; i++) {
                     // 판매점 리스트 노출
                     let store = stores[i];
-                    let winHtml = `<tr>
-                                       <td>${store['num']}</td>
-                                       <td><span class="store-tit">${store['name']}</span></td>
-                                       <td>${store['count']}</td>
-                                   </tr>`
-                    $('.table-store tbody').append(winHtml);
-
-                    // 판매점 주소랑 지도 연동
                     let addr = store['addr'];
                     let lat = store['lat'];
                     let lng = store['lng'];
+                    let name = store['name'];
+                    let winHtml = `<tr>
+                                       <td>${store['num']}</td>
+                                       <td><span class="store-tit" onclick="testMethod(${lat}, ${lng}, ${name}, ${addr})">${name}</span></td>
+                                       <td>${store['count']}</td>
+                                   </tr>`
+                    // <td><span class="store-tit">${store['name']}</span></td>
+                    $('.table-store tbody').append(winHtml);
+
+                    // 판매점 주소랑 지도 연동
                     let map = new google.maps.Map(document.getElementById('map'), {
                         center: {
                             lat: 36.4769958,
@@ -224,17 +262,17 @@ function showStore() {
                                 map.setCenter(this.getPosition()); // 중심 위치를 클릭된 마커의 위치로 변경
                                 map.setZoom(14); // 마커 클릭 시 줌
                             });
-
-                            // 리스트 - 지도연동
-                            let store_tit = $('.table-store tr').eq(j).find('.store-tit');
-                            store_tit.on('click', function() {
-                                //infowindow.setContent(locations[j][0]);
-                                infowindow.open(map, marker);
-
-                                map.setCenter(marker.getPosition());
-                                map.setZoom(14);
-                            });
                         }
+
+                        // 리스트 - 지도연동
+                        /*let store_tit = $('.table-store tr').eq(j).find('.store-tit');
+                        store_tit.on('click', function() {
+                            infowindow.setContent(locations[j][0]);
+                            infowindow.open(map, marker);
+
+                            map.setCenter(marker.getPosition());
+                            map.setZoom(14);
+                        });*/
                     }
                 }
             }

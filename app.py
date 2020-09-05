@@ -92,8 +92,5 @@ sched.add_job(get_lotto, 'cron', minute="00", hour="22", day_of_week="sat")
 sched.start()
 
 
-#schedule.every().saturday.at("22:00").do(get_lotto_result, get_lotto_store, get_lotto)
-
-
 if __name__ == '__main__':
     app.run('0.0.0.0', port=8000, debug=True)

@@ -8,7 +8,7 @@
         <meta property="og:image" content="../static/lotto.jpg" />
         <title>Mini Lotto</title>
         <link href="../static/style.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHlzY-NotWWUgA8KJRoCV9JwlyPb5IgqE&callback=initMap&region=kr"></script>
@@ -18,16 +18,18 @@
         <div id="wrap">
             <h1 class="blind">로또 당첨 조회 및 내역 확인 페이지</h1>
 
-            <header id="header">
+            <!--<header id="header">
                 <h2 class="page-tit eng">Mini Lotto</h2>
-            </header>
+            </header>-->
 
             <div id="container">
                 <section class="sec sec-win">
-                    <strong class="win-tit">
-                        923회 <span>(2020년 08월 08일 추첨)</span>
-                    </strong>
-                    <div class="win-num">
+                    <div class="sec-inner">
+                        <h2 class="page-tit"><strong class="eng">Mini Lotto</strong>에서 확인하세요!</h2>
+                        <strong class="win-tit">
+                            923회 <span>(2020년 08월 08일 추첨)</span>
+                        </strong>
+                        <div class="win-num">
                         <span class="win-num-item">1</span>
                         <span class="win-num-item">2</span>
                         <span class="win-num-item">3</span>
@@ -37,152 +39,162 @@
                         <span class="win-num-item plus">+</span>
                         <span class="win-num-item num-bnus">7</span>
                     </div>
+                    </div>
+                </section>
+
+                <section class="sec sec-notice">
+                    <div class="sec-inner">
+                        <p>Mini Lotto는 내 당첨번호와 이번회차 당첨정보 및 최다 당첨판매점 정보를 제공합니다. * 매주 토요일 밤 10시 업데이트</p>
+                    </div>
                 </section>
 
                 <section class="sec sec-my">
-                    <h3 class="my-tit">내 당첨확인</h3>
-                    <div class="table-wrap table-num">
-                        <table>
-                            <colgroup>
-                                <col width="33.3%">
-                                <col width="33.3%">
-                                <col width="33.3%">
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th scope="col">번호</th>
-                                    <th scope="col">일치</th>
-                                    <th scope="col">결과</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="input-form">
-                                            <input type="text" maxlength="2" id="myNo1-0" value="13">
-                                            <input type="text" maxlength="2" id="myNo1-1" value="2">
-                                            <input type="text" maxlength="2" id="myNo1-2" value="3">
-                                            <input type="text" maxlength="2" id="myNo1-3" value="24">
-                                            <input type="text" maxlength="2" id="myNo1-4" value="5">
-                                            <input type="text" maxlength="2" id="myNo1-5" value="6">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="match-num">
-                                            <span>1</span>
-                                            <span>2</span>
-                                            <span class="equal">3</span>
-                                            <span>4</span>
-                                            <span>5</span>
-                                            <span class="equal">6</span>
-                                        </div>
-                                    </td>
-                                    <td class="win-result">낙첨</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="input-form">
-                                            <input type="text" maxlength="2" id="myNo2-0">
-                                            <input type="text" maxlength="2" id="myNo2-1">
-                                            <input type="text" maxlength="2" id="myNo2-2">
-                                            <input type="text" maxlength="2" id="myNo2-3">
-                                            <input type="text" maxlength="2" id="myNo2-4">
-                                            <input type="text" maxlength="2" id="myNo2-5">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="match-num">
-                                            <span>1</span>
-                                            <span>2</span>
-                                            <span class="equal">3</span>
-                                            <span>4</span>
-                                            <span>5</span>
-                                            <span class="equal">6</span>
-                                        </div>
-                                    </td>
-                                    <td class="win-result">낙첨</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="input-form">
-                                            <input type="text" maxlength="2" id="myNo3-0">
-                                            <input type="text" maxlength="2" id="myNo3-1">
-                                            <input type="text" maxlength="2" id="myNo3-2">
-                                            <input type="text" maxlength="2" id="myNo3-3">
-                                            <input type="text" maxlength="2" id="myNo3-4">
-                                            <input type="text" maxlength="2" id="myNo3-5">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="match-num">
-                                            <span>1</span>
-                                            <span>2</span>
-                                            <span class="equal">3</span>
-                                            <span>4</span>
-                                            <span>5</span>
-                                            <span class="equal">6</span>
-                                        </div>
-                                    </td>
-                                    <td class="win-result">낙첨</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="input-form">
-                                            <input type="text" maxlength="2" id="myNo4-0">
-                                            <input type="text" maxlength="2" id="myNo4-1">
-                                            <input type="text" maxlength="2" id="myNo4-2">
-                                            <input type="text" maxlength="2" id="myNo4-3">
-                                            <input type="text" maxlength="2" id="myNo4-4">
-                                            <input type="text" maxlength="2" id="myNo4-5">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="match-num">
-                                            <span class="equal">1</span>
-                                            <span class="equal">2</span>
-                                            <span class="equal">3</span>
-                                            <span class="equal">4</span>
-                                            <span class="equal">5</span>
-                                            <span class="equal">6</span>
-                                        </div>
-                                    </td>
-                                    <td class="win-result">당첨</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="input-form">
-                                            <input type="text" maxlength="2" id="myNo5-0">
-                                            <input type="text" maxlength="2" id="myNo5-1">
-                                            <input type="text" maxlength="2" id="myNo5-2">
-                                            <input type="text" maxlength="2" id="myNo5-3">
-                                            <input type="text" maxlength="2" id="myNo5-4">
-                                            <input type="text" maxlength="2" id="myNo5-5">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="match-num">
-                                            <span>1</span>
-                                            <span>2</span>
-                                            <span class="equal">3</span>
-                                            <span>4</span>
-                                            <span>5</span>
-                                            <span class="equal">6</span>
-                                        </div>
-                                    </td>
-                                    <td class="win-result">낙첨</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="btn-wrap">
-                        <button type="button" class="btn-type btn-reset" onclick="resetResult()">초기화</button>
-                        <button type="button" class="btn-type btn-confirm" onclick="getNumber()">확인</button>
+                    <div class="sec-inner">
+                        <h3 class="my-tit">내 당첨확인</h3>
+                        <div class="table-wrap table-num">
+                            <table>
+                                <colgroup>
+                                    <col width="33.3%">
+                                    <col width="33.3%">
+                                    <col width="33.3%">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">번호</th>
+                                        <th scope="col">일치</th>
+                                        <th scope="col">결과</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="input-form">
+                                                <input type="text" maxlength="2" id="myNo1-0" value="13">
+                                                <input type="text" maxlength="2" id="myNo1-1" value="10">
+                                                <input type="text" maxlength="2" id="myNo1-2" value="18">
+                                                <input type="text" maxlength="2" id="myNo1-3" value="24">
+                                                <input type="text" maxlength="2" id="myNo1-4" value="5">
+                                                <input type="text" maxlength="2" id="myNo1-5" value="6">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="match-num">
+                                                <span>1</span>
+                                                <span>2</span>
+                                                <span class="equal">3</span>
+                                                <span>4</span>
+                                                <span>5</span>
+                                                <span class="equal">6</span>
+                                            </div>
+                                        </td>
+                                        <td class="win-result">낙첨</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="input-form">
+                                                <input type="text" maxlength="2" id="myNo2-0">
+                                                <input type="text" maxlength="2" id="myNo2-1">
+                                                <input type="text" maxlength="2" id="myNo2-2">
+                                                <input type="text" maxlength="2" id="myNo2-3">
+                                                <input type="text" maxlength="2" id="myNo2-4">
+                                                <input type="text" maxlength="2" id="myNo2-5">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="match-num">
+                                                <span>1</span>
+                                                <span>2</span>
+                                                <span class="equal">3</span>
+                                                <span>4</span>
+                                                <span>5</span>
+                                                <span class="equal">6</span>
+                                            </div>
+                                        </td>
+                                        <td class="win-result">낙첨</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="input-form">
+                                                <input type="text" maxlength="2" id="myNo3-0">
+                                                <input type="text" maxlength="2" id="myNo3-1">
+                                                <input type="text" maxlength="2" id="myNo3-2">
+                                                <input type="text" maxlength="2" id="myNo3-3">
+                                                <input type="text" maxlength="2" id="myNo3-4">
+                                                <input type="text" maxlength="2" id="myNo3-5">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="match-num">
+                                                <span>1</span>
+                                                <span>2</span>
+                                                <span class="equal">3</span>
+                                                <span>4</span>
+                                                <span>5</span>
+                                                <span class="equal">6</span>
+                                            </div>
+                                        </td>
+                                        <td class="win-result">낙첨</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="input-form">
+                                                <input type="text" maxlength="2" id="myNo4-0">
+                                                <input type="text" maxlength="2" id="myNo4-1">
+                                                <input type="text" maxlength="2" id="myNo4-2">
+                                                <input type="text" maxlength="2" id="myNo4-3">
+                                                <input type="text" maxlength="2" id="myNo4-4">
+                                                <input type="text" maxlength="2" id="myNo4-5">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="match-num">
+                                                <span class="equal">1</span>
+                                                <span class="equal">2</span>
+                                                <span class="equal">3</span>
+                                                <span class="equal">4</span>
+                                                <span class="equal">5</span>
+                                                <span class="equal">6</span>
+                                            </div>
+                                        </td>
+                                        <td class="win-result">당첨</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="input-form">
+                                                <input type="text" maxlength="2" id="myNo5-0">
+                                                <input type="text" maxlength="2" id="myNo5-1">
+                                                <input type="text" maxlength="2" id="myNo5-2">
+                                                <input type="text" maxlength="2" id="myNo5-3">
+                                                <input type="text" maxlength="2" id="myNo5-4">
+                                                <input type="text" maxlength="2" id="myNo5-5">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="match-num">
+                                                <span>1</span>
+                                                <span>2</span>
+                                                <span class="equal">3</span>
+                                                <span>4</span>
+                                                <span>5</span>
+                                                <span class="equal">6</span>
+                                            </div>
+                                        </td>
+                                        <td class="win-result">낙첨</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="btn-wrap">
+                            <button type="button" class="btn-type btn-reset" onclick="resetResult()">초기화</button>
+                            <button type="button" class="btn-type btn-confirm" onclick="getNumber()">확인</button>
+                        </div>
                     </div>
                 </section>
 
                 <section class="sec sec-result">
-                    <h3 class="result-tit">회차별 당첨결과</h3>
-                    <div class="table-wrap table-result">
+                    <div class="sec-inner">
+                        <h3 class="result-tit">회차별 당첨결과</h3>
+                        <div class="table-wrap table-result">
                         <table>
                             <colgroup>
                                 <col width="25%">
@@ -208,35 +220,38 @@
                             </tbody>
                         </table>
                     </div>
+                    </div>
                 </section>
 
                 <section class="sec sec-store">
-                    <h3 class="store-tit">최다 당첨판매점</h3>
-                    <div class="store-wrap">
-                        <div id="map" class="store-map"></div>
-                        <div class="store-list">
-                            <div class="table-wrap table-store">
-                                <table>
-                                    <colgroup>
-                                        <col width="22%">
-                                        <col width="50%">
-                                        <col width="28%">
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">번호</th>
-                                            <th scope="col">상호명</th>
-                                            <th scope="col">당첨횟수</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td><span class="store-tit">씨유역삼에클라트로또판매점</span></td>
-                                            <td>35</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                    <div class="sec-inner">
+                        <h3 class="store-tit">최다 당첨판매점</h3>
+                        <div class="store-wrap">
+                            <div id="map" class="store-map"></div>
+                            <div class="store-list">
+                                <div class="table-wrap table-store">
+                                    <table>
+                                        <colgroup>
+                                            <col width="22%">
+                                            <col width="50%">
+                                            <col width="28%">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">번호</th>
+                                                <th scope="col">상호명</th>
+                                                <th scope="col">당첨횟수</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td><span class="store-tit">씨유역삼에클라트로또판매점</span></td>
+                                                <td>35</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
