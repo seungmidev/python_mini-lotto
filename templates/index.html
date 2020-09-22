@@ -1,12 +1,37 @@
 <!DOCTYPE html>
 <html lang="ko">
     <head>
-        <meta charset="UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <meta property="og:title" content="Mini Lotto" />
-        <meta property="og:description" content="로또 당첨 조회 및 내역 확인" />
-        <meta property="og:image" content="../static/lotto.jpg" />
-        <title>Mini Lotto</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="title" content="Mini Lotto">
+        <link rel="canonical" href="#">
+
+        <meta property="og:site_name" content="Mini Lotto">
+        <meta property="og:type" content="website">
+        <meta name="twitter:card" content="summary">
+
+        <meta itemprop="url" content="http://minilotto.shop/">
+        <meta property="og:url" content="http://minilotto.shop/">
+        <meta name="twitter:url" content="http://minilotto.shop/">
+
+        <meta itemprop="image" content="{{ url_for('static', filename='images/og_image.png') }}">
+        <meta property="og:image" content="{{ url_for('static', filename='images/og_image.png') }}">
+        <meta name="twitter:image" content="{{ url_for('static', filename='images/og_image.png') }}">
+
+        <meta itemprop="name" content="Mini Lotto">
+        <meta property="og:title" content="Mini Lotto">
+        <meta name="twitter:title" content="Mini Lotto">
+
+        <meta property="og:description" content="로또 당첨 조회 및 내역 확인">
+        <meta name="twitter:description" content="로또 당첨 조회 및 내역 확인">
+
+        <meta itemprop="description" content="로또 당첨 조회 및 내역 확인">
+        <meta itemprop="keywords" content="로또 당첨 조회 및 내역 확인">
+
+        <meta name="description" content="로또 당첨 조회 및 내역 확인">
+        <meta name="keywords" content="로또 당첨 조회 및 내역 확인">
+
         <link href="../static/style.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
@@ -50,9 +75,9 @@
                         <div class="table-wrap table-num">
                             <table>
                                 <colgroup>
-                                    <col width="33.3%">
-                                    <col width="33.3%">
-                                    <col width="33.3%">
+                                    <col width="44%">
+                                    <col width="28%">
+                                    <col width="28%">
                                 </colgroup>
                                 <thead>
                                     <tr>
@@ -65,12 +90,12 @@
                                     <tr>
                                         <td>
                                             <div class="input-form">
-                                                <input type="text" maxlength="2" id="myNo1-0">
-                                                <input type="text" maxlength="2" id="myNo1-1">
-                                                <input type="text" maxlength="2" id="myNo1-2">
-                                                <input type="text" maxlength="2" id="myNo1-3">
-                                                <input type="text" maxlength="2" id="myNo1-4">
-                                                <input type="text" maxlength="2" id="myNo1-5">
+                                                <input type="text" maxlength="2" id="myNo1-0" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo1-1" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo1-2" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo1-3" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo1-4" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo1-5" pattern="\d*">
                                             </div>
                                         </td>
                                         <td>
@@ -88,12 +113,12 @@
                                     <tr>
                                         <td>
                                             <div class="input-form">
-                                                <input type="text" maxlength="2" id="myNo2-0">
-                                                <input type="text" maxlength="2" id="myNo2-1">
-                                                <input type="text" maxlength="2" id="myNo2-2">
-                                                <input type="text" maxlength="2" id="myNo2-3">
-                                                <input type="text" maxlength="2" id="myNo2-4">
-                                                <input type="text" maxlength="2" id="myNo2-5">
+                                                <input type="text" maxlength="2" id="myNo2-0" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo2-1" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo2-2" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo2-3" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo2-4" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo2-5" pattern="\d*">
                                             </div>
                                         </td>
                                         <td>
@@ -111,12 +136,12 @@
                                     <tr>
                                         <td>
                                             <div class="input-form">
-                                                <input type="text" maxlength="2" id="myNo3-0">
-                                                <input type="text" maxlength="2" id="myNo3-1">
-                                                <input type="text" maxlength="2" id="myNo3-2">
-                                                <input type="text" maxlength="2" id="myNo3-3">
-                                                <input type="text" maxlength="2" id="myNo3-4">
-                                                <input type="text" maxlength="2" id="myNo3-5">
+                                                <input type="text" maxlength="2" id="myNo3-0" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo3-1" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo3-2" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo3-3" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo3-4" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo3-5" pattern="\d*">
                                             </div>
                                         </td>
                                         <td>
@@ -134,12 +159,12 @@
                                     <tr>
                                         <td>
                                             <div class="input-form">
-                                                <input type="text" maxlength="2" id="myNo4-0">
-                                                <input type="text" maxlength="2" id="myNo4-1">
-                                                <input type="text" maxlength="2" id="myNo4-2">
-                                                <input type="text" maxlength="2" id="myNo4-3">
-                                                <input type="text" maxlength="2" id="myNo4-4">
-                                                <input type="text" maxlength="2" id="myNo4-5">
+                                                <input type="text" maxlength="2" id="myNo4-0" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo4-1" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo4-2" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo4-3" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo4-4" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo4-5" pattern="\d*">
                                             </div>
                                         </td>
                                         <td>
@@ -157,12 +182,12 @@
                                     <tr>
                                         <td>
                                             <div class="input-form">
-                                                <input type="text" maxlength="2" id="myNo5-0">
-                                                <input type="text" maxlength="2" id="myNo5-1">
-                                                <input type="text" maxlength="2" id="myNo5-2">
-                                                <input type="text" maxlength="2" id="myNo5-3">
-                                                <input type="text" maxlength="2" id="myNo5-4">
-                                                <input type="text" maxlength="2" id="myNo5-5">
+                                                <input type="text" maxlength="2" id="myNo5-0" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo5-1" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo5-2" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo5-3" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo5-4" pattern="\d*">
+                                                <input type="text" maxlength="2" id="myNo5-5" pattern="\d*">
                                             </div>
                                         </td>
                                         <td>
@@ -176,6 +201,7 @@
                                             </div>
                                         </td>
                                         <td class="win-result">낙첨</td>
+
                                     </tr>
                                 </tbody>
                             </table>
@@ -193,10 +219,10 @@
                         <div class="table-wrap table-result">
                         <table>
                             <colgroup>
-                                <col width="25%">
-                                <col width="25%">
-                                <col width="25%">
-                                <col width="25%">
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="30%">
+                                <col width="30%">
                             </colgroup>
                             <thead>
                                 <tr>
@@ -242,7 +268,7 @@
                                         <tbody>
                                             <tr>
                                                 <td>1</td>
-                                                <td><span class="store-tit">씨유역삼에클라트로또판매점</span></td>
+                                                <td><a href="#map" class="store-tit">씨유역삼에클라트로또판매점</a></td>
                                                 <td>35</td>
                                             </tr>
                                         </tbody>

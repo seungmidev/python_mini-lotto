@@ -41,6 +41,8 @@
 #container .sec-store .store-list {float:left; width:50%; height:492px; overflow-y:auto;}
 #container .sec-store .table-store .store-tit {font-size:14px; cursor:pointer;}
 
+#container .gm-style .gm-style-iw-c {padding:12px !important;}
+
 @media screen and (max-width:620px) {
     #container .sec-store .store-map {width:100%;}
     #container .sec-store .store-list {width:100%; height:auto; overflow:hidden;}
@@ -57,17 +59,18 @@
     #container .table-wrap th {font-size:13px;}
     #container .table-wrap td {padding:6px 5px;}
 
-    #container .btn-wrap .btn-type {width:135px; height:35px; margin:0 5px; font-size:14px; line-height:35px;}
+    #container .btn-wrap .btn-type {width:135px; height:40px; margin:0 5px; font-size:14px; line-height:40px;}
 
     #container .sec-win .page-tit {font-size:36px;}
     #container .sec-win .win-tit {font-size:22px;}
-    #container .sec-win .win-num-item {width:25px; height:25px; margin:0 3px; font-size:12px; line-height:25px;}
+    #container .sec-win .win-num-item {width:27px; height:27px; margin:0 5px; font-size:12px; line-height:27px;}
 
     #container .sec-notice {padding:15px !important;}
 
-    #container .sec-my .table-num td {padding:5px 0px;}
-    #container .sec-my .input-form input {width:28px; height:28px; line-height:28px; margin:3px; font-size:12px;}
+    #container .sec-my .table-num td {padding:5px;}
+    #container .sec-my .input-form input {width:27px; height:27px; line-height:27px; margin:3px; font-size:12px;}
 
     #container .sec-store .store-map {height:400px;}
+    #container .sec-store .table-store td {padding:8px 5px;}
     #container .sec-store .table-store .store-tit {font-size:12px;}
 }
